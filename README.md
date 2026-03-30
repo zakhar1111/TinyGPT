@@ -1,0 +1,2 @@
+# TinyGPT
+The simplest transformer
