@@ -3,12 +3,41 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyGPT.Domain", "src\TinyGPT.Domain\TinyGPT.Domain.csproj", "{7003D823-386B-6265-8A48-9EA11AFECD56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyGPT.Infrastructure", "src\TinyGPT.Infrastructure\TinyGPT.Infrastructure.csproj", "{7C6FDD7A-7550-889D-472A-6C1348175EB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyGPT.Application", "src\TinyGPT.Application\TinyGPT.Application.csproj", "{ACD9E060-2DD9-1F0C-512E-AA21985A6C40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyGPT.Console", "src\TinyGPT.Console\TinyGPT.Console.csproj", "{690A3EC9-3935-4494-9740-54F172961EBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7003D823-386B-6265-8A48-9EA11AFECD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7003D823-386B-6265-8A48-9EA11AFECD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7003D823-386B-6265-8A48-9EA11AFECD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7003D823-386B-6265-8A48-9EA11AFECD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C6FDD7A-7550-889D-472A-6C1348175EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C6FDD7A-7550-889D-472A-6C1348175EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C6FDD7A-7550-889D-472A-6C1348175EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C6FDD7A-7550-889D-472A-6C1348175EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD9E060-2DD9-1F0C-512E-AA21985A6C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD9E060-2DD9-1F0C-512E-AA21985A6C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD9E060-2DD9-1F0C-512E-AA21985A6C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD9E060-2DD9-1F0C-512E-AA21985A6C40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690A3EC9-3935-4494-9740-54F172961EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690A3EC9-3935-4494-9740-54F172961EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690A3EC9-3935-4494-9740-54F172961EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690A3EC9-3935-4494-9740-54F172961EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04B67278-A088-4204-B889-012B497646ED}
 	EndGlobalSection
 EndGlobal
