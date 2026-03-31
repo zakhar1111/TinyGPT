@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TinyGPT.Application\TinyGPT.Application.csproj" />
+    <ProjectReference Include="..\TinyGPT.Infrastructure\TinyGPT.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
