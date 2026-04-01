@@ -10,5 +10,7 @@ public static class DIExtensions
     {
         services.AddScoped<IOperationHandler<TrainModelCommand, string>, TrainModelCommandHandler>();
         services.AddScoped<IOperationHandler<GenerateTextQuery, string>, GenerateTextQueryHandler>();
+
+        services.AddScoped<OperationExecutor>();
     }
 }

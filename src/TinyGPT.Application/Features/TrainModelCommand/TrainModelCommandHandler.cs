@@ -15,13 +15,13 @@ public class TrainModelCommandHandler(ITrainingService trainingService)
 
         // ================= DOMAIN ORCHESTRATION =================
         // This is the CORRECT place to call training
-        _trainingService.Train(
+        await _trainingService.TrainAsync(
             request.Text,
             request.Epochs,
             request.LearningRate
         );
 
         // ================= RESULT =================
-        return await Task.FromResult("Model training completed successfully.");
+        return "Model training completed successfully.";
     }
 }

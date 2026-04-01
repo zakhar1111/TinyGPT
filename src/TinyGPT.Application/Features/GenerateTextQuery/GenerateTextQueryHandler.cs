@@ -24,12 +24,12 @@ public sealed class GenerateTextQueryHandler
         if (string.IsNullOrWhiteSpace(request.StartText))
             throw new ArgumentException("Start text cannot be empty.");
 
-        var result = _generationService.Generate(
+        var result = await _generationService.GenerateAsync(
             request.StartText,
             request.Length,
             _seqLength // use config
         );
 
-        return await Task.FromResult(result);
+        return result;
     }
 }
