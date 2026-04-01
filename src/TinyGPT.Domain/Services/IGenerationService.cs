@@ -2,5 +2,5 @@
 
 public interface IGenerationService
 {
-    string Generate(string start, int length, int seqLength);
+    Task<string> GenerateAsync(string start, int length, int seqLength);
 }

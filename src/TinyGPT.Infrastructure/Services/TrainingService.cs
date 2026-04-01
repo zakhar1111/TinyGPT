@@ -28,7 +28,7 @@ public class TrainingService
         //_rnd = rnd;
     }
 
-    public void Train(string text, int epochs = 100, float lr = 0.01f)
+    public async Task TrainAsync(string text, int epochs = 100, float lr = 0.01f)
     {
         var words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
@@ -69,6 +69,9 @@ public class TrainingService
                         _transformer.WoFinal[i, j] -= 
                             lr * (probs[j] - (j == seq.Target.Id ? 1 : 0)) * output[^1][i];
             }
+
+            //  Yield control (important for async behavior)
+            await Task.Yield();
 
             if (epoch % 20 == 0)
                 Console.WriteLine($"Epoch {epoch}, Loss: {loss:F2}");

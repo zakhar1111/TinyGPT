@@ -4,5 +4,5 @@ namespace TinyGPT.Domain.Services;
 
 public interface ITrainingService
 {
-    void Train(string text, int epochs = 100, float lr = 0.01f);
+    Task TrainAsync(string text, int epochs = 100, float lr = 0.01f);
 }

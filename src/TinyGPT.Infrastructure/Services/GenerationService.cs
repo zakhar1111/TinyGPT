@@ -19,12 +19,12 @@ public class GenerationService
         _rnd = rnd;
     }
 
-    public string Generate(string start, int length, int seqLength)
+    public async Task<string> GenerateAsync(string start, int length, int seqLength)
     {
         if (!_vocab.GetAllTokens().Any())
             throw new InvalidOperationException("Model not trained.");
 
-        var tokens = start.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        var tokens =  start.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                           .Select(w => _vocab.GetToken(w).Id)
                           .ToList();
 
@@ -48,6 +48,9 @@ public class GenerationService
             window.Enqueue(next);
             result.Add(_vocab.GetToken(next).Value);
         }
+
+        await Task.Yield();
+
         return string.Join(" ", result);
     }
 
