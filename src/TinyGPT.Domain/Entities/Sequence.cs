@@ -7,8 +7,8 @@ public class Sequence
 
     public Sequence(IReadOnlyList<Token> tokens, Token target)
     {
-        Tokens = tokens;
-        Target = target;
+        Tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
+        Target = target ?? throw new ArgumentNullException(nameof(target));
     }
 }
 
