@@ -6,6 +6,7 @@ using TinyGPT.Domain.Services;
 namespace TinyGPT.Infrastructure.Services;
 
 public class GenerationService
+    : IGenerationService
 {
     private readonly Transformer _transformer;
     private readonly IVocabularyRepository _vocab;
@@ -20,15 +21,19 @@ public class GenerationService
 
     public string Generate(string start, int length, int seqLength)
     {
+        if (!_vocab.GetAllTokens().Any())
+            throw new InvalidOperationException("Model not trained.");
+
         var tokens = start.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                           .Select(w => _vocab.GetToken(w).Id)
                           .ToList();
 
         var window = new Queue<int>(tokens);
+
         while (window.Count < seqLength)
             window.Enqueue(window.Peek());
 
-        var result = new List<string>(tokens.Select(id => _vocab.GetToken(id).Value));
+        var result = tokens.Select(id => _vocab.GetToken(id).Value).ToList();
 
         for (int step = 0; step < length; step++)
         {

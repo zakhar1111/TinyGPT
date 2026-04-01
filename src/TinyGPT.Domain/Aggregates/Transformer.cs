@@ -42,9 +42,15 @@ public class Transformer
             Wv_heads.Add(MatrixOperations.RandomMatrix(_embedSize, _embedSize, _rnd));
         }
         Wo = MatrixOperations.RandomMatrix(_embedSize * _numHeads, _embedSize, _rnd);
-        WoFinal = MatrixOperations.RandomMatrix(_embedSize, _embeddingRepo.Embeddings.GetLength(0), _rnd);
+        //WoFinal = MatrixOperations.RandomMatrix(_embedSize, _embeddingRepo.Embeddings.GetLength(0), _rnd);
         W1 = MatrixOperations.RandomMatrix(_embedSize, _embedSize * 2, _rnd);
         W2 = MatrixOperations.RandomMatrix(_embedSize * 2, _embedSize, _rnd);
+    }
+
+    // called AFTER vocab is known
+    public void InitializeOutputLayer(int vocabSize)
+    {
+        WoFinal = MatrixOperations.RandomMatrix(_embedSize, vocabSize, _rnd);
     }
 
     // Transformer block
@@ -53,8 +59,7 @@ public class Transformer
         var attn = MultiHeadAttention(X);
         var x1 = AddAndNorm(X, attn);
         var ff = FeedForward(x1);
-        var x2 = AddAndNorm(x1, ff);
-        return x2;
+        return AddAndNorm(x1, ff);
     }
 
     private float[][] MultiHeadAttention(float[][] X)

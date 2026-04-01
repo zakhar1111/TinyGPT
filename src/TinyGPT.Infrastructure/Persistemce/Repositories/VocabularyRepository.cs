@@ -8,8 +8,11 @@ public class VocabularyRepository : IVocabularyRepository
     private readonly Dictionary<string, Token> wordToToken = new();
     private readonly Dictionary<int, Token> idToToken = new();
 
-    public VocabularyRepository(IEnumerable<string> words)
+    public void Build(IEnumerable<string> words)
     {
+        wordToToken.Clear();
+        idToToken.Clear();
+
         int id = 0;
         foreach (var w in words.Distinct())
         {

@@ -1,0 +1,8 @@
+﻿using TinyGPT.Domain.Entities;
+
+namespace TinyGPT.Domain.Services;
+
+public interface ITrainingService
+{
+    void Train(string text, int epochs = 100, float lr = 0.01f);
+}
