@@ -25,3 +25,22 @@ A lightweight, educational implementation of a Transformer-based language model 
   - Application (training, inference)
 
   - Infrastructure (math ops)
+
+## High-level flow
+```
+Text
+ ↓
+Tokenization (Vocabulary)
+ ↓
+Embeddings + Positional Encoding
+ ↓
+Transformer Block
+   ├── Multi-Head Attention
+   ├── Residual + LayerNorm
+   ├── Feed Forward
+ ↓
+Linear Layer + Softmax
+ ↓
+Next Token Prediction
+```
+
