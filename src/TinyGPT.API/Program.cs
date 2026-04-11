@@ -35,7 +35,11 @@ app.MapPost(
 {
     var result = await mediator
         .ExecuteAsync<TrainModelCommand, string>(cmd, ct);
-    return Results.Ok(result);
+    return Results.Ok(new 
+    { 
+        status = "ok",
+        message = result 
+    });
 });
 
 app.MapGet(
