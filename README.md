@@ -1,5 +1,5 @@
 # TinyGPT
-A lightweight, educational implementation of a Transformer-based language model built from scratch in C#. Inspired by  ["Attention Is All You Need"](https://arxiv.org/pdf/1706.03762) and ["Let's build a Storyteller"]( https://github.com/karpathy/LLM101n) and [Build a (Tiny) LLM from Scratch](https://algo.monster/courses/llm/llm_course_introduction). It is designed to demonstrate 
+A lightweight, educational implementation of a Transformer-based language model built from scratch in C#. Inspired by  ["Attention Is All You Need"](https://arxiv.org/pdf/1706.03762) and ["Let's build a Storyteller"]( https://github.com/karpathy/LLM101n) and [Build a (Tiny) LLM from Scratch](https://algo.monster/courses/llm/llm_course_introduction). It demonstrates 
 - core LLM concepts
 - Transformer logic.
 
