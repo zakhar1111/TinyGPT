@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TinyGPT.Application;
-using TinyGPT.Application.Features.GenerateTextQuery;
 using TinyGPT.Application.Features.TrainModelCommand;
 using TinyGPT.Application.Extensions;
 using TinyGPT.Infrastructure.Extensions;
+using TinyGPT.Application.Features.GenerateTextCommand;
 //using TinyGPT.Application;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,15 +42,15 @@ app.MapPost(
     });
 });
 
-app.MapGet(
+app.MapPost(
     "/generate",
     async (
-        [AsParameters] GenerateTextQuery query,
+        [FromBody] GenerateTextCommand query,
         [FromServices] OperationExecutor mediator,
         CancellationToken ct) =>
 {
     var result = await mediator
-        .ExecuteAsync<GenerateTextQuery, string>(query, ct);
+        .ExecuteAsync<GenerateTextCommand, string>(query, ct);
     return Results.Ok(result);
 });
 
