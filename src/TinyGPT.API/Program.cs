@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TinyGPT.Application;
 using TinyGPT.Application.Features.TrainModelCommand;
 using TinyGPT.Application.Extensions;
@@ -64,7 +64,7 @@ app.MapPost(
         [FromServices] OperationExecutor mediator,
         CancellationToken ct) => 
     {
-        // ?? Important for streaming
+        // 🔥 Important for streaming
         httpContext.Response.Headers.Add("Content-Type", "text/event-stream");
 
         var stream = await mediator
@@ -75,7 +75,7 @@ app.MapPost(
         {
             var json = System.Text.Json.JsonSerializer.Serialize(new
             {
-                model = "minigpt",
+                model = "tinyGPT",
                 token,
                 done = false
             });

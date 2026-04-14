@@ -26,7 +26,8 @@ public class TrainModelCommandHandler(ITrainingService trainingService)
         await _trainingService.TrainAsync(
             text,
             request.Epochs,
-            request.LearningRate
+            request.LearningRate,
+            ct
         );
 
         // ================= RESULT =================

@@ -19,7 +19,8 @@ public class TrainingService
         Transformer transformer, 
         IVocabularyRepository vocab,
         IEmbeddingRepository embeddingRepo,
-        int seqLength)//,Random rnd)
+        int seqLength,
+        CancellationToken ct = default)//,Random rnd)
     {
         _transformer = transformer;
         _vocab = vocab;
@@ -28,8 +29,11 @@ public class TrainingService
         //_rnd = rnd;
     }
 
-    public async Task TrainAsync(string text, int epochs = 100, float lr = 0.01f)
+    public async Task TrainAsync(string text, int epochs = 100, float lr = 0.01f, CancellationToken ct = default)
     {
+        // 🔥 Cancellation support 
+        ct.ThrowIfCancellationRequested();
+
         var words = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         // ✅ 1. Build vocab
@@ -51,9 +55,15 @@ public class TrainingService
         // ✅ 4. Train with simplified forward + loss + gradient update
         for (int epoch = 0; epoch < epochs; epoch++)
         {
+            // 🔥 Cancellation support 
+            ct.ThrowIfCancellationRequested();
+
             float loss = 0;
             foreach (var seq in sequences)
             {
+                // 🔥 Cancellation support 
+                ct.ThrowIfCancellationRequested();
+
                 var tokenIds = seq.Tokens.Select(t => t.Id).ToArray();
                 var X = _transformer.EmbedWithPosition(tokenIds);
 
@@ -65,16 +75,23 @@ public class TrainingService
 
                 // simplified gradient update for WoFinal
                 for (int i = 0; i < embedSize; i++)
+                {
+                    if ((i & 15) == 0) // every 16 iterations
+                        ct.ThrowIfCancellationRequested();
                     for (int j = 0; j < vocabSize; j++)
-                        _transformer.WoFinal[i, j] -= 
+                    {
+                        _transformer.WoFinal[i, j] -=
                             lr * (probs[j] - (j == seq.Target.Id ? 1 : 0)) * output[^1][i];
+                    }
+                }
             }
 
-            //  Yield control (important for async behavior)
-            await Task.Yield();
 
             if (epoch % 20 == 0)
+            {
                 Console.WriteLine($"Epoch {epoch}, Loss: {loss:F2}");
+                await Task.Delay(1, ct); 
+            }
         }
     }
 
