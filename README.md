@@ -1,6 +1,8 @@
 # TinyGPT
-A lightweight, educational implementation of a Transformer-based language model built from scratch in C#. Inspired by  ["Attention Is All You Need"](https://arxiv.org/pdf/1706.03762) and ["Let's build a Storyteller"]( https://github.com/karpathy/LLM101n) and [Build a (Tiny) LLM from Scratch](https://algo.monster/courses/llm/llm_course_introduction). It demonstrates 
-- core LLM concepts
+A lightweight implementation of a Transformer-based language model built from scratch in pure C#. 
+
+It demonstrates 
+- core concepts of the transformer-based LLM architecture
 - Transformer logic.
 
 No external libraries.
@@ -48,4 +50,8 @@ Linear Layer + Softmax
  ↓
 Next Token Prediction
 ```
+## Inspired by  
+- [Build a (Tiny) LLM from Scratch](https://algo.monster/courses/llm/llm_course_introduction).
+- ["Attention Is All You Need"](https://arxiv.org/pdf/1706.03762)
+- ["Let's build a Storyteller"]( https://github.com/karpathy/LLM101n) 
 
