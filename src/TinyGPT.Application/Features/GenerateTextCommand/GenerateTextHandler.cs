@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TinyGPT.Domain.Services;
 
-namespace TinyGPT.Application.Features.GenerateTextQuery;
+namespace TinyGPT.Application.Features.GenerateTextCommand;
 
-public sealed class GenerateTextQueryHandler 
-    : IOperationHandler<GenerateTextQuery, string>
+public sealed class GenerateTextHandler 
+    : IOperationHandler<GenerateTextCommand, string>
 {
     private readonly IGenerationService _generationService;
     private readonly int _seqLength;
 
-    public GenerateTextQueryHandler(
+    public GenerateTextHandler(
         IGenerationService generationService,
         IConfiguration config
     )
@@ -19,15 +19,18 @@ public sealed class GenerateTextQueryHandler
     }
 
 
-    public async Task<string?> HandleAsync(GenerateTextQuery request, CancellationToken ct = default)
+    public async Task<string?> HandleAsync(
+        GenerateTextCommand request, 
+        CancellationToken ct = default)
     {
-        if (string.IsNullOrWhiteSpace(request.StartText))
+        if (string.IsNullOrWhiteSpace(request.Prompt))
             throw new ArgumentException("Start text cannot be empty.");
 
         var result = await _generationService.GenerateAsync(
-            request.StartText,
-            request.Length,
-            _seqLength // use config
+            request.Prompt,
+            request.MaxTokens,
+            _seqLength, // use config
+            ct
         );
 
         return result;

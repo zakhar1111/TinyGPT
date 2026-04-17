@@ -1,4 +1,5 @@
-﻿using TinyGPT.Domain.Aggregates;
+﻿using System.Runtime.CompilerServices;
+using TinyGPT.Domain.Aggregates;
 using TinyGPT.Domain.Helpers;
 using TinyGPT.Domain.Repositories;
 using TinyGPT.Domain.Services;
@@ -19,7 +20,11 @@ public class GenerationService
         _rnd = rnd;
     }
 
-    public async Task<string> GenerateAsync(string start, int length, int seqLength)
+    public async Task<string> GenerateAsync(
+        string start, 
+        int length, 
+        int seqLength,
+        CancellationToken ct = default)
     {
         if (!_vocab.GetAllTokens().Any())
             throw new InvalidOperationException("Model not trained.");
@@ -37,21 +42,68 @@ public class GenerationService
 
         for (int step = 0; step < length; step++)
         {
+            // 🔥 Cancellation support 
+            ct.ThrowIfCancellationRequested();
+
             var input = window.ToArray();
+
             var X = _transformer.EmbedWithPosition(input);
             var output = _transformer.Forward(X);
+
             var logits = MatrixOperations.MatMul(output[^1], _transformer.WoFinal);
             var probs = SoftmaxService.Softmax(logits);
 
             int next = SampleWithBinarySearch(probs);
+
             window.Dequeue();
             window.Enqueue(next);
+
             result.Add(_vocab.GetToken(next).Value);
         }
 
-        await Task.Yield();
+        return await Task.FromResult(string.Join(" ", result));
+    }
 
-        return string.Join(" ", result);
+    public async IAsyncEnumerable<string> GenerateStreamAsync(
+        string start,
+        int length,
+        int seqLength,
+        [EnumeratorCancellation] CancellationToken ct)
+    {
+        if (!_vocab.GetAllTokens().Any())
+            throw new InvalidOperationException("Model not trained.");
+
+        var tokens = start.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                          .Select(w => _vocab.GetToken(w).Id)
+                          .ToList();
+
+        var window = new Queue<int>(tokens);
+        while (window.Count < seqLength)
+            window.Enqueue(window.Peek());
+
+        foreach (var id in tokens)
+            yield return _vocab.GetToken(id).Value;
+
+        for (int step = 0; step < length; step++)
+        {
+            // 🔥 Cancellation support 
+            ct.ThrowIfCancellationRequested();
+
+            var input = window.ToArray();
+
+            var X = _transformer.EmbedWithPosition(input);
+            var output = _transformer.Forward(X);
+
+            var logits = MatrixOperations.MatMul(output[^1], _transformer.WoFinal);
+            var probs = SoftmaxService.Softmax(logits);
+
+            int next = SampleWithBinarySearch(probs);
+
+            window.Dequeue();
+            window.Enqueue(next);
+
+            yield return _vocab.GetToken(next).Value;
+        }
     }
 
     private int SampleWithBinarySearch(float[] probs)
