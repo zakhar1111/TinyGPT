@@ -1,5 +1,5 @@
 # TinyGPT
-A lightweight implementation of a Transformer-based language model built from scratch in pure C#. 
+A lightweight implementation of a transformer-based language model (GPT-like) built from scratch in pure C#. 
 
 It demonstrates 
 - core concepts of the transformer-based LLM architecture
